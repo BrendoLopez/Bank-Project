@@ -4,7 +4,8 @@
     {
         static void Main(string[] args)
         {
-            Menu.OptionsCreateLogin();
+            Menu menu = new Menu();
+            menu.OptionsCreateLogin();
         }
     }
 }

@@ -4,9 +4,9 @@ namespace BankProject.Entities
 {
     public class Account
     {
-        public int NumeroConta { get; set; }
-        public string NomeProprietario { get; set; }
-        public double SaldoConta { get; set; }
+        private int NumeroConta { get; set; }
+        private string NomeProprietario { get; set; }
+        private double SaldoConta { get; set; }
 
         public Account()
         {
@@ -19,14 +19,14 @@ namespace BankProject.Entities
             SaldoConta = saldoConta;
         }
 
-        public static void Sacar(double quantia)
+        public bool Sacar(double quantia)
         {
-            Account saldoConta = new Account();
-
-            if (quantia > 0)
+            if(quantia <= SaldoConta)
             {
-                saldoConta.SaldoConta -= quantia;
+                SaldoConta -= quantia;
+                return true;
             }
+            return false;
         }
 
         public void Depositar(double quantia)
@@ -34,18 +34,9 @@ namespace BankProject.Entities
             SaldoConta += quantia;
         }
 
-        public static void ChecarSaldo()
+        public double ChecarSaldo()
         {
-            Account saldo = new Account();
-            Console.Clear();
-            System.Console.WriteLine("Você escolheu verificar o saldo da conta bancária.");
-            double valor = saldo.SaldoConta;
-            CultureInfo culturaBrasileira = new("pt-BR");
-            System.Console.WriteLine("O saldo da sua conta é: " + valor.ToString("C", culturaBrasileira));
-            System.Console.Write("Pressione a tecla ENTER para continuar...");
-            Console.ReadLine();
-            Console.Clear();
-            Menu.OptionsAccountUser();
+            return SaldoConta;
         }
 
         public override string ToString()

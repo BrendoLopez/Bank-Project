@@ -1,10 +1,13 @@
 ﻿using BankProject.Entities;
+using System.Globalization;
 
 namespace BankProject
 {
     public class Menu : Account
     {
-        public static void OptionsCreateLogin()
+        private Account account { get; set; }
+        private UserService userService { get; set; }
+        public void OptionsCreateLogin()
         {
             Console.Clear();
             System.Console.WriteLine("Olá, bem-vindo ao nosso Banco <<Bank Project>>.");
@@ -17,7 +20,23 @@ namespace BankProject
                 switch (respostaUsuario)
                 {
                     case 1:
-                    UserService.CreateLogin();
+                        Console.Clear();
+                        System.Console.WriteLine(">>CRIAÇÃO DE LOGIN>>>>>>");
+                        System.Console.WriteLine("");
+                        System.Console.Write("Nome completo: ");
+                        string nomeCompleto = Console.ReadLine();
+                        System.Console.Write("Senha: ");
+                        string senhaUsuario = Console.ReadLine();
+                        System.Console.Write("Email / Login: ");
+                        string emailUsuario = Console.ReadLine();
+                        System.Console.Write("CPF: ");
+                        string cpfUsuario = Console.ReadLine();
+                        userService.CreateLogin(nomeCompleto, senhaUsuario, emailUsuario, cpfUsuario);
+
+                        System.Console.WriteLine("");
+                        System.Console.Write("Pressione ENTER para continuar...");
+                        Console.ReadLine();
+                        Console.Clear();
                     break;
 
                     case 2:
@@ -37,7 +56,7 @@ namespace BankProject
             }
         }
 
-        public static void OptionsAccountUser()
+        public void OptionsAccountUser()
         {
             System.Console.WriteLine("1 - Verificar Saldo");
             System.Console.WriteLine("2 - Realizar Saque");
@@ -56,13 +75,33 @@ namespace BankProject
                 switch (respostaUsuario)
                 {
                     case 1:
-                    ;
-                    ChecarSaldo();
+                        ChecarSaldo();
+                        Console.Clear();
+                        System.Console.WriteLine("Você escolheu verificar o saldo da conta bancária.");
+                        double valor = account.ChecarSaldo();
+                        CultureInfo culturaBrasileira = new("pt-BR");
+                        System.Console.WriteLine("O saldo da sua conta é: " + valor.ToString("C", culturaBrasileira));
+                        System.Console.Write("Pressione a tecla ENTER para continuar...");
+                        Console.ReadLine();
+                        Console.Clear();
+                        OptionsAccountUser();
                     break;
+
                     case 2:
                     System.Console.Write("Quanto você deseja sacar?: ");
                     double sacar = double.Parse(Console.ReadLine());
-                    Sacar(sacar);
+                    var saqueEfetuado = account.Sacar(sacar);
+                    
+                    if(!saqueEfetuado)
+                    {
+                        System.Console.WriteLine("");
+                        System.Console.WriteLine("Você não tem saldo para saque, faça um depósito.");
+                        System.Console.WriteLine("");
+                        System.Console.Write("Aperte a tecla ENTER para voltar ao menu de opções do banco...");
+                        Console.ReadLine();
+                        Console.Clear();
+                        OptionsAccountUser();
+                    }
                     break;
                 }
             }

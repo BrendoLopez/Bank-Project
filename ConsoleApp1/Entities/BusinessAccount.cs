@@ -2,10 +2,7 @@
 {
     public class BusinessAccount : Account
     {
-        public double LimiteEmprestimo
-        {
-            get; set;
-        }
+        public double LimiteEmprestimo { get; set; }
 
         public BusinessAccount()
         {
@@ -16,12 +13,12 @@
             LimiteEmprestimo = limiteEmprestimo;
         }
 
-        public void Limite(double quantia)
-        {
-            if (quantia <= LimiteEmprestimo)
-            {
-                SaldoConta += quantia;
-            }
-        }
+        // public void Limite(double quantia)
+        // {
+        //     if (quantia <= LimiteEmprestimo)
+        //     {
+        //         SaldoConta += quantia;
+        //     }
+        // }
     }
 }
