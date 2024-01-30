@@ -5,8 +5,8 @@ namespace BankProject
 {
     public class Menu : Account
     {
-        private Account account { get; set; }
-        private UserService userService { get; set; }
+        private Account account { get; set; } = new Account();
+        private UserService userService { get; set; } = new UserService();
         public void OptionsCreateLogin()
         {
             Console.Clear();
@@ -37,6 +37,7 @@ namespace BankProject
                         System.Console.Write("Pressione ENTER para continuar...");
                         Console.ReadLine();
                         Console.Clear();
+                        OptionsAccountUser();
                     break;
 
                     case 2:
@@ -88,20 +89,20 @@ namespace BankProject
                     break;
 
                     case 2:
-                    System.Console.Write("Quanto você deseja sacar?: ");
-                    double sacar = double.Parse(Console.ReadLine());
-                    var saqueEfetuado = account.Sacar(sacar);
+                        System.Console.Write("Quanto você deseja sacar?: ");
+                        double sacar = double.Parse(Console.ReadLine());
+                        var saqueEfetuado = account.Sacar(sacar);
                     
-                    if(!saqueEfetuado)
-                    {
-                        System.Console.WriteLine("");
-                        System.Console.WriteLine("Você não tem saldo para saque, faça um depósito.");
-                        System.Console.WriteLine("");
-                        System.Console.Write("Aperte a tecla ENTER para voltar ao menu de opções do banco...");
-                        Console.ReadLine();
-                        Console.Clear();
-                        OptionsAccountUser();
-                    }
+                        if(!saqueEfetuado)
+                        {
+                            System.Console.WriteLine("");
+                            System.Console.WriteLine("Você não tem saldo para saque, faça um depósito.");
+                            System.Console.WriteLine("");
+                            System.Console.Write("Aperte a tecla ENTER para voltar ao menu de opções do banco...");
+                            Console.ReadLine();
+                            Console.Clear();
+                            OptionsAccountUser();
+                        }
                     break;
                 }
             }
