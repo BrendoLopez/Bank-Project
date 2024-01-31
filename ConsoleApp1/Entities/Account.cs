@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace BankProject.Entities
+﻿namespace BankProject.Entities
 {
     public class Account
     {

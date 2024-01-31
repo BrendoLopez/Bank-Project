@@ -5,8 +5,8 @@ namespace BankProject
 {
     public class Menu : Account
     {
-        private Account account { get; set; } = new Account();
-        private UserService userService { get; set; } = new UserService();
+        private Account account = new Account();
+        private UserService userService = new UserService();
         public void OptionsCreateLogin()
         {
             Console.Clear();
