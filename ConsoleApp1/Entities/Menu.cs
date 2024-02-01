@@ -3,15 +3,14 @@ using System.Globalization;
 
 namespace BankProject
 {
-    public class Menu : Account
+    public class Menu
     {
         private Account account = new Account();
         private UserService userService = new UserService();
 
         public void OptionsCreateLogin()
         {
-            Console.Clear();
-            System.Console.WriteLine("Olá, bem-vindo ao nosso Banco <<Bank Project>>.");
+            UserSalutation();
             System.Console.WriteLine("Deseja criar uma conta em nosso banco? \nExemplo de resposta esperada: 1 = Sim e 2 = Não.");
             System.Console.Write("Resposta: ");
             string inputUsuario = Console.ReadLine();
@@ -60,6 +59,68 @@ namespace BankProject
 
         public void OptionsAccountUser()
         {
+            OptionsMainMenuBank();
+            Console.Write("O que deseja fazer dentre as opções acima?: ");
+            string inputUsuario = Console.ReadLine();
+
+
+            if (int.TryParse(inputUsuario, out int respostaUsuario))
+            {
+                CultureInfo culturaBrasileira = new("pt-BR");
+
+                switch (respostaUsuario)
+                {
+                    // Verificação de saldo bancário.
+                    case 1:
+                    account.ChecarSaldo();
+                    Console.Clear();
+                    Console.WriteLine("Você escolheu verificar o saldo da conta bancária.");
+                    double valor = account.ChecarSaldo();
+                    Console.WriteLine("O saldo da sua conta é: " + valor.ToString("C", culturaBrasileira));
+                    ReturnOptionsMenu();
+                    break;
+
+                    // Saque da conta bancária
+                    case 2:
+                    Console.Clear();
+                    Console.Write("Quanto você deseja sacar?: ");
+                    double sacar = double.Parse(Console.ReadLine());
+                    var saqueEfetuado = account.Sacar(sacar);
+
+                    if (!saqueEfetuado)
+                    {
+                        Console.WriteLine("");
+                        Console.WriteLine("Você não tem saldo para saque, faça um depósito.");
+                        ReturnOptionsMenu();
+                    }
+
+                    if (saqueEfetuado)
+                    {
+                        Console.WriteLine($"Saque de {sacar.ToString("C", culturaBrasileira)} efetuado com sucesso!");                        
+                        ReturnOptionsMenu();
+                    }
+                    break;
+
+                    // Depósito na conta bancária
+                    case 3:
+                    Console.WriteLine("Você escolheu realizar um depósito.");
+                    Console.WriteLine();
+                    break;
+                }
+            }
+        }
+
+        public void ReturnOptionsMenu()
+        {
+            Console.WriteLine("");
+            Console.Write("Aperte a tecla ENTER para voltar ao menu de opções do banco...");
+            Console.ReadLine();
+            Console.Clear();
+            OptionsAccountUser();
+        }
+
+        public void OptionsMainMenuBank()
+        {
             Console.WriteLine("Olá " + userService.NomeCompleto + ".");
             Console.WriteLine("");
             Console.WriteLine("1 - Verificar Saldo");
@@ -69,53 +130,12 @@ namespace BankProject
             Console.WriteLine("5 - Extrato de Transações");
             Console.WriteLine("6 - Sair");
             Console.WriteLine("");
+        }
 
-            Console.Write("O que deseja fazer dentre as opções acima?: ");
-            string inputUsuario = Console.ReadLine();
-
-
-            if (int.TryParse(inputUsuario, out int respostaUsuario))
-            {
-                switch (respostaUsuario)
-                {
-                    case 1:
-                    ChecarSaldo();
-                    Console.Clear();
-                    Console.WriteLine("Você escolheu verificar o saldo da conta bancária.");
-                    double valor = account.ChecarSaldo();
-                    CultureInfo culturaBrasileira = new("pt-BR");
-                    Console.WriteLine("O saldo da sua conta é: " + valor.ToString("C", culturaBrasileira));
-                    Console.Write("Pressione a tecla ENTER para continuar...");
-                    Console.ReadLine();
-                    Console.Clear();
-                    OptionsAccountUser();
-                    break;
-
-                    case 2:
-                    Console.Write("Quanto você deseja sacar?: ");
-                    double sacar = double.Parse(Console.ReadLine());
-                    var saqueEfetuado = account.Sacar(sacar);
-
-                    if (!saqueEfetuado)
-                    {
-                        Console.WriteLine("");
-                        Console.WriteLine("Você não tem saldo para saque, faça um depósito.");
-                        Console.WriteLine("");
-                        Console.Write("Aperte a tecla ENTER para voltar ao menu de opções do banco...");
-                        Console.ReadLine();
-                        Console.Clear();
-                        OptionsAccountUser();
-                    }
-
-                    if (saqueEfetuado)
-                    {
-                        Console.WriteLine($"Saque de {account.ChecarSaldo()} efetuado com sucesso!");
-                        Console.ReadLine();
-                        OptionsAccountUser();
-                    }
-                    break;
-                }
-            }
+        public void UserSalutation()
+        {
+            Console.Clear();
+            Console.WriteLine("Olá, bem-vindo ao nosso Banco <<Bank Project>>.");
         }
     }
 }

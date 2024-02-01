@@ -19,7 +19,7 @@
 
         public bool Sacar(double quantia)
         {
-            if(quantia < SaldoConta)
+            if(quantia <= SaldoConta)
             {
                 SaldoConta -= quantia;
                 return true;
