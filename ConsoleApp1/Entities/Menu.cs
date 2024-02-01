@@ -53,6 +53,8 @@ namespace BankProject
             }
             else
             {
+                Console.Clear();
+                Console.WriteLine("Você digitou algo errado, tente novamente!");
                 OptionsCreateLogin();
             }
         }
@@ -109,11 +111,10 @@ namespace BankProject
                     Console.WriteLine("");
                     Console.Write("Quanto você deseja depositar?: ");
                     string depositar = Console.ReadLine();
-                    double inputDepositar = 0;
-                    var depositoEfetuado = account.Depositar(inputDepositar);
                     
-                    if(double.TryParse(depositar, out inputDepositar))
+                    if(double.TryParse(depositar, out double inputDepositar))
                     {
+                        var depositoEfetuado = account.Depositar(inputDepositar);
                         if(!depositoEfetuado)
                         {
                             System.Console.WriteLine($"Não é possivel depositar {inputDepositar.ToString("C", culturaBrasileira)}, pois é um valor zerado.");
@@ -127,9 +128,20 @@ namespace BankProject
                             ReturnOptionsMenu();
                         }
                     }
-
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Você digitou algo errado, tente novamente!");
+                        ReturnOptionsMenu();
+                    }
                     break;
                 }
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Você digitou algo errado, tente novamente!");
+                ReturnOptionsMenu();
             }
         }
 
