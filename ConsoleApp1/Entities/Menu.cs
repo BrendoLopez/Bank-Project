@@ -96,15 +96,38 @@ namespace BankProject
 
                     if (saqueEfetuado)
                     {
-                        Console.WriteLine($"Saque de {sacar.ToString("C", culturaBrasileira)} efetuado com sucesso!");                        
+                        Console.WriteLine($"Saque de {sacar.ToString("C", culturaBrasileira)} efetuado com sucesso!");   
+                        Console.WriteLine($"Seu novo saldo agora é de {account.ChecarSaldo().ToString("C", culturaBrasileira)}");
                         ReturnOptionsMenu();
                     }
                     break;
 
                     // Depósito na conta bancária
                     case 3:
+                    Console.Clear();
                     Console.WriteLine("Você escolheu realizar um depósito.");
-                    Console.WriteLine();
+                    Console.WriteLine("");
+                    Console.Write("Quanto você deseja depositar?: ");
+                    string depositar = Console.ReadLine();
+                    double inputDepositar = 0;
+                    var depositoEfetuado = account.Depositar(inputDepositar);
+                    
+                    if(double.TryParse(depositar, out inputDepositar))
+                    {
+                        if(!depositoEfetuado)
+                        {
+                            System.Console.WriteLine($"Não é possivel depositar {inputDepositar.ToString("C", culturaBrasileira)}, pois é um valor zerado.");
+                            ReturnOptionsMenu();
+                        }
+
+                        if(depositoEfetuado)
+                        {
+                            System.Console.WriteLine("Depósito realizado com sucesso!");
+                            Console.WriteLine($"Seu novo saldo agora é de {account.ChecarSaldo().ToString("C", culturaBrasileira)}");
+                            ReturnOptionsMenu();
+                        }
+                    }
+
                     break;
                 }
             }

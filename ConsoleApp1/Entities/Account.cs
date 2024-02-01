@@ -4,7 +4,7 @@
     {
         private int NumeroConta { get; set; }
         private string NomeProprietario { get; set; }
-        private double SaldoConta { get; set; } = 50;
+        private double SaldoConta { get; set; }
 
         public Account()
         {
@@ -27,9 +27,14 @@
             return false;
         }
 
-        public void Depositar(double quantia)
+        public bool Depositar(double quantia)
         {
-            SaldoConta += quantia;
+            if(quantia > 0)
+            {
+                SaldoConta += quantia;
+                return true;
+            }
+            return false;
         }
 
         public double ChecarSaldo()
