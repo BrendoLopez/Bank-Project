@@ -4,7 +4,7 @@
     {
         private int NumeroConta { get; set; }
         private string NomeProprietario { get; set; }
-        private double SaldoConta { get; set; }
+        private double SaldoConta { get; set; } = 50;
 
         public Account()
         {
@@ -19,7 +19,7 @@
 
         public bool Sacar(double quantia)
         {
-            if(quantia <= SaldoConta)
+            if(quantia < SaldoConta)
             {
                 SaldoConta -= quantia;
                 return true;
