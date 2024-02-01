@@ -86,22 +86,32 @@ namespace BankProject
                     case 2:
                     Console.Clear();
                     Console.Write("Quanto você deseja sacar?: ");
-                    double sacar = double.Parse(Console.ReadLine());
-                    var saqueEfetuado = account.Sacar(sacar);
-
-                    if (!saqueEfetuado)
+                    string sacar = Console.ReadLine();
+                    
+                    if(double.TryParse(sacar, out double inputSacar))
                     {
-                        Console.WriteLine("");
-                        Console.WriteLine("Você não tem saldo para saque, faça um depósito.");
+                        var saqueEfetuado = account.Sacar(inputSacar);
+                        if (!saqueEfetuado)
+                        {
+                            Console.WriteLine("");
+                            Console.WriteLine("Você não tem saldo para saque, faça um depósito.");
+                            ReturnOptionsMenu();
+                        }
+
+                        if (saqueEfetuado)
+                        {
+                            Console.WriteLine($"Saque de {inputSacar.ToString("C", culturaBrasileira)} efetuado com sucesso!");   
+                            Console.WriteLine($"Seu novo saldo agora é de {account.ChecarSaldo().ToString("C", culturaBrasileira)}");
+                            ReturnOptionsMenu();
+                        }
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Você digitou algo errado, tente novamente!");
                         ReturnOptionsMenu();
                     }
 
-                    if (saqueEfetuado)
-                    {
-                        Console.WriteLine($"Saque de {sacar.ToString("C", culturaBrasileira)} efetuado com sucesso!");   
-                        Console.WriteLine($"Seu novo saldo agora é de {account.ChecarSaldo().ToString("C", culturaBrasileira)}");
-                        ReturnOptionsMenu();
-                    }
                     break;
 
                     // Depósito na conta bancária
