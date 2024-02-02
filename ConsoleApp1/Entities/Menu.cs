@@ -7,6 +7,7 @@ namespace BankProject
     {
         private Account account = new Account();
         private UserService userService = new UserService();
+        PersonalChange alteracoesDadosPessoais = new PersonalChange();
 
         public void OptionsCreateLogin()
         {
@@ -148,49 +149,12 @@ namespace BankProject
 
                     // Alteração dos dados pessoais
                     case 4:
-                    Console.Clear();
-                    System.Console.WriteLine("Você escolheu a opção de alterar os dados pessoais.");
-
-                    UserService cliente = new UserService();
-                    System.Console.WriteLine("");
-                    System.Console.WriteLine("1 - Nome");
-                    System.Console.WriteLine("2 - Senha");
-                    System.Console.WriteLine("3 - Email");
-                    System.Console.WriteLine("4 - CPF");
-                    System.Console.WriteLine("");
-                    System.Console.Write("Qual dos 4 itens você deseja alterar?: ");
-                    string dadosAlteracao = Console.ReadLine();
-
-                    if(int.TryParse(dadosAlteracao, out int respostaAlteracao))
-                    {
-                        if(respostaAlteracao == 1)
-                        {
-                            System.Console.Clear();
-                            System.Console.Write("Digite o novo nome para ser alterado: ");
-                            string novoNomeCompleto = Console.ReadLine();
-                            cliente.NomeCompleto = novoNomeCompleto;
-                            System.Console.WriteLine($"Seu novo nome agora é: {cliente.NomeCompleto}");
-                            ReturnOptionsMenu();
-                        }
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Você digitou algo errado, tente novamente!");
-                        ReturnOptionsMenu();
-                    }
-
-
-
-
-
-
-
-
-
+                    alteracoesDadosPessoais.AlteracaoNomeCompleto();
                     break;
 
                     default:
+                    Console.Clear();
+                    Console.WriteLine("Você digitou algo errado, tente novamente!");
                     ReturnOptionsMenu();
                     break;
                 }
