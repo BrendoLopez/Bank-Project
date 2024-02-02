@@ -7,6 +7,10 @@
         public string EmailUsuario { get; set; }
         public string CpfUsuario { get; set; }
 
+        public UserService()
+        {
+        }
+        
         public bool CreateLogin(string nomeCompleto, string senhaUsuario, string emailUsuario, string cpfUsuario)
         {
             NomeCompleto = nomeCompleto;
